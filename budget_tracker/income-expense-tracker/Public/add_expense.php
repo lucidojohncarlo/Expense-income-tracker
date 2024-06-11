@@ -1,34 +1,28 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "12345";
-$database = "income_expense_tracker";
+include 'db_connect.php';
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $title = $_POST['expense'];
+    $amount = $_POST['expenseAmount'];
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+    if (!empty($title) && !empty($amount) && is_numeric($amount)) {
+        // Prepare and bind
+        $stmt = $conn->prepare("INSERT INTO expenses (title, amount) VALUES (?, ?)");
+        $stmt->bind_param("sd", $title, $amount);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+        if ($stmt->execute()) {
+            echo "New expense record created successfully";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
+    } else {
+        echo "Invalid input.";
+    }
+
+    $conn->close();
+    header("Location: index.php");
+    exit();
 }
-
-// Prepare and bind
-$stmt = $conn->prepare("INSERT INTO expenses (title, amount) VALUES (?, ?)");
-$stmt->bind_param("sd", $title, $amount);
-
-$title = $_POST['expense'];
-$amount = $_POST['expenseAmount'];
-
-if ($stmt->execute()) {
-    echo "New expense record created successfully";
-} else {
-    echo "Error: " . $stmt->error;
-}
-
-$stmt->close();
-$conn->close();
-
-header("Location: index.php");
-exit();
 ?>
