@@ -1,15 +1,14 @@
 <?php
 $servername = "localhost";
-$username = "root";
-$password = "";
-$database = "income_expense_tracker";
+$username = "root"; // Your MySQL username
+$password = ""; // Your MySQL password
+$database = "income_expense_tracker"; // Your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
 
 // Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-
 ?>

@@ -19,7 +19,7 @@
             <!-- Add Income Form -->
             <div class="add-income-container">
                 <h4>Add Income</h4>
-                <form id="incomeForm" action="add_income.php" method="POST">
+                <form id="incomeForm" method="POST">
                     <div class="form-group">
                         <label for="income">Income Source:</label>
                         <input class="form-control" type="text" id="income" name="income">
@@ -35,7 +35,7 @@
             <!-- Add Expense Form -->
             <div class="add-expense-container mt-4">
                 <h4>Add Expense</h4>
-                <form id="expenseForm" action="add_expense.php" method="POST">
+                <form id="expenseForm" method="POST">
                     <div class="form-group">
                         <label for="expense">Expense Title:</label>
                         <input class="form-control" type="text" id="expense" name="expense">
@@ -72,14 +72,14 @@
                 <div class="table-responsive" id="expenseHistoryContainer">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Action</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Action</th>
+                            </tr>
                         </thead>
                         <tbody id="expenseHistory">
-                        <!-- Expense items will be added dynamically -->
+                            <!-- Expense items will be added dynamically -->
                         </tbody>
                     </table>
                 </div>
@@ -99,7 +99,7 @@
 </div>
 
 <!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Script JS -->

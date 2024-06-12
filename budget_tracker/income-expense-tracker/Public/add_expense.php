@@ -11,26 +11,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sd", $title, $amount);
 
         if ($stmt->execute()) {
-            echo "New expense record created successfully";
+            // Insert into audit trail
+            $action = 'Add Expense';
+            $details = "Title: $title, Amount: ₱$amount";
+            $stmt = $conn->prepare("INSERT INTO audit_trail (action, details) VALUES (?, ?)");
+            $stmt->bind_param("ss", $action, $details);
+            $stmt->execute();
+            $stmt->close();
+
+            // Load updated data
+            include 'load_data.php';
+            echo json_encode($incomeData);
         } else {
             echo "Error: " . $stmt->error;
         }
 
-        $stmt->close();
-
-        // Insert into audit trail
-        $action = 'Add Expense';
-        $details = "Title: $title, Amount: $amount";
-        $stmt = $conn->prepare("INSERT INTO audit_trail (action, details) VALUES (?, ?)");
-        $stmt->bind_param("ss", $action, $details);
-        $stmt->execute();
         $stmt->close();
     } else {
         echo "Invalid input.";
     }
 
     $conn->close();
-    header("Location: index.php");
-    exit();
 }
 ?>
