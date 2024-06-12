@@ -1,11 +1,11 @@
 <?php
+// Database connection
 $servername = "localhost";
-$username = "root"; // Your MySQL username
-$password = ""; // Your MySQL password
-$database = "income_expense_tracker"; // Your database name
+$username = "root";
+$password = "";
+$dbname = "income_expense_tracker";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
