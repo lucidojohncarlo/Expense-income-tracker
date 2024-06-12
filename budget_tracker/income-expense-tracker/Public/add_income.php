@@ -17,6 +17,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $stmt->close();
+
+        // Insert into audit trail
+        $action = 'Add Income';
+        $details = "Source: $source, Amount: $amount";
+        $stmt = $conn->prepare("INSERT INTO audit_trail (action, details) VALUES (?, ?)");
+        $stmt->bind_param("ss", $action, $details);
+        $stmt->execute();
+        $stmt->close();
     } else {
         echo "Invalid input.";
     }
