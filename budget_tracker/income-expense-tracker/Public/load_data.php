@@ -1,53 +1,44 @@
 <?php
-include 'db_connect.php';
+require 'db_connect.php';
 
-// Function to fetch data from database
-function loadData() {
-    global $conn;
+$totalIncome = 0;
+$totalExpenses = 0;
 
-    // Fetch total income
-    $totalIncomeQuery = $conn->query("SELECT SUM(amount) AS totalIncome FROM incomes");
-    $totalIncome = $totalIncomeQuery->fetch_assoc();
-    $totalIncomeAmount = (float) $totalIncome['totalIncome'];
-
-    // Fetch total expenses
-    $totalExpensesQuery = $conn->query("SELECT SUM(amount) AS totalExpenses FROM expenses");
-    $totalExpenses = $totalExpensesQuery->fetch_assoc();
-    $totalExpensesAmount = (float) $totalExpenses['totalExpenses'];
-
-    // Calculate balance
-    $balance = $totalIncomeAmount - $totalExpensesAmount;
-
-    // Fetch expense history
-    $expensesQuery = $conn->query("SELECT * FROM expenses ORDER BY id DESC");
-    $expenses = [];
-    while ($row = $expensesQuery->fetch_assoc()) {
-        $expenses[] = [
-            'id' => $row['id'],
-            'title' => $row['title'],
-            'amount' => (float) $row['amount']
-        ];
-    }
-
-    // Fetch audit trail
-    $auditTrailQuery = $conn->query("SELECT * FROM audit_trail ORDER BY id DESC");
-    $auditTrail = [];
-    while ($row = $auditTrailQuery->fetch_assoc()) {
-        $auditTrail[] = [
-            'id' => $row['id'],
-            'message' => $row['action'] . ' - ' . $row['details']
-        ];
-    }
-
-    return [
-        'totalIncome' => $totalIncomeAmount,
-        'totalExpenses' => $totalExpensesAmount,
-        'balance' => $balance,
-        'expenses' => $expenses,
-        'auditTrail' => $auditTrail
-    ];
+$incomeResult = $conn->query("SELECT SUM(amount) AS total FROM income");
+if ($incomeResult->num_rows > 0) {
+    $row = $incomeResult->fetch_assoc();
+    $totalIncome = $row['total'] ? $row['total'] : 0;
 }
 
-// Load data
-$incomeData = loadData();
+$expensesResult = $conn->query("SELECT SUM(amount) AS total FROM expenses");
+if ($expensesResult->num_rows > 0) {
+    $row = $expensesResult->fetch_assoc();
+    $totalExpenses = $row['total'] ? $row['total'] : 0;
+}
+
+$balance = $totalIncome - $totalExpenses;
+
+$expensesData = [];
+$expensesResult = $conn->query("SELECT * FROM expenses");
+while ($row = $expensesResult->fetch_assoc()) {
+    $expensesData[] = $row;
+}
+
+$auditTrailData = [];
+$auditTrailResult = $conn->query("SELECT * FROM audit_trail ORDER BY created_at DESC");
+while ($row = $auditTrailResult->fetch_assoc()) {
+    $auditTrailData[] = $row;
+}
+
+$response = [
+    'totalIncome' => $totalIncome,
+    'totalExpenses' => $totalExpenses,
+    'balance' => $balance,
+    'expenses' => $expensesData,
+    'auditTrail' => $auditTrailData
+];
+
+echo json_encode($response);
+
+$conn->close();
 ?>
