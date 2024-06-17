@@ -18,7 +18,7 @@
         <div class="add-container col-md-4">
             <!-- Add Income Form -->
             <div class="add-income-container">
-                <h4> </h4>
+                <h4>Add Income </h4>
                 <form id="incomeForm" method="POST">
                     <div class="form-group">
                         <label for="income">Income Source:</label>
