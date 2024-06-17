@@ -1,9 +1,9 @@
 <?php
 // Update these values with your actual database credentials
 $servername = getenv('DB_Server');
-$username = getenv('DB_USER');
-$password = getenv('DB_PASSWORD');
-$dbname = getenv('DB_NAME');
+$username = getenv('DB_Username');
+$password = getenv('DB_Password');
+$dbname = getenv('DB_Database');
 
 // $servername ="jcserver.mysql.database.azure.com" ;
 // $username = "johncarlo";
