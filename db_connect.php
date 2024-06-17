@@ -1,10 +1,10 @@
 <?php
 // Update these values with your actual database credentials
 <<<<<<< HEAD
-$servername = getenv("DB_Server");
-$username = getenv("DB_Username");
-$password = getenv("DB_Password");
-$dbname = getenv("DB_Database");
+//$servername = getenv("DB_Server");
+//$username = getenv("DB_Username");
+//$password = getenv("DB_Password");
+//$dbname = getenv("DB_Database");
 =======
 $servername = getenv('DB_Server');
 $username = getenv('DB_USER');
@@ -20,7 +20,7 @@ $dbname = getenv('DB_NAME');
 //$dbname = "budget_tracker";
 
 // Create connection with SSL
-$conn = new mysqli($servername, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL);
+//$conn = new mysqli($servername, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL);
 =======
 // $servername ="jcserver.mysql.database.azure.com" ;
 // $username = "johncarlo";
