@@ -15,8 +15,8 @@ $dbname = getenv("DB_Database");
 //$password = "";
 //$dbname = "budget_tracker";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Create connection with SSL
+$conn = new mysqli($servername, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL);
 
 // Check connection
 if ($conn->connect_error) {
