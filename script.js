@@ -1,67 +1,3 @@
-function updateExpenseHistory(expenses) {
-    let expenseHistory = document.getElementById('expenseHistory');
-    expenseHistory.innerHTML = '';
-    expenses.forEach(expense => {
-        let row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${expense.title}</td>
-            <td>₱${expense.amount}</td>
-            <td>
-                <button class="btn btn-sm btn-warning" onclick="editExpense(${expense.id}, '${expense.title}', ${expense.amount})">Edit</button>
-                <button class="btn btn-sm btn-danger" onclick="removeExpense(${expense.id})">Remove</button>
-            </td>
-        `;
-        expenseHistory.appendChild(row);
-    });
-}
-
-function updateAuditTrail(auditTrail) {
-    let auditTrailContainer = document.getElementById('auditTrail');
-    auditTrailContainer.innerHTML = '';
-    auditTrail.forEach(entry => {
-        let item = document.createElement('li');
-        item.className = 'list-group-item';
-        item.textContent = entry.message;
-        auditTrailContainer.appendChild(item);
-    });
-}
-
-function editExpense(id, title, amount) {
-    let newTitle = prompt("Edit Expense Title:", title);
-    let newAmount = prompt("Edit Expense Amount:", amount);
-    if (newTitle !== null && newAmount !== null) {
-        let formData = new FormData();
-        formData.append('id', id);
-        formData.append('title', newTitle);
-        formData.append('amount', newAmount);
-        fetch('edit_expense.php', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                loadData();
-            })
-            .catch(error => console.error('Error:', error));
-    }
-}
-
-function removeExpense(id) {
-    if (confirm("Are you sure you want to remove this expense?")) {
-        let formData = new FormData();
-        formData.append('id', id);
-        fetch('remove_expense.php', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                loadData();
-            })
-            .catch(error => console.error('Error:', error));
-    }
-}
-
 document.addEventListener("DOMContentLoaded", function() {
     loadData();
 
@@ -130,4 +66,68 @@ function resetAll() {
             loadData();
         })
         .catch(error => console.error('Error:', error));
+}
+
+function updateExpenseHistory(expenses) {
+    let expenseHistory = document.getElementById('expenseHistory');
+    expenseHistory.innerHTML = '';
+    expenses.forEach(expense => {
+        let row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${expense.title}</td>
+            <td>₱${expense.amount}</td>
+            <td>
+                <button class="btn btn-sm btn-warning" onclick="editExpense(${expense.id}, '${expense.title}', ${expense.amount})">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="removeExpense(${expense.id})">Remove</button>
+            </td>
+        `;
+        expenseHistory.appendChild(row);
+    });
+}
+
+function updateAuditTrail(auditTrail) {
+    let auditTrailContainer = document.getElementById('auditTrail');
+    auditTrailContainer.innerHTML = '';
+    auditTrail.forEach(entry => {
+        let item = document.createElement('li');
+        item.className = 'list-group-item';
+        item.textContent = entry.message;
+        auditTrailContainer.appendChild(item);
+    });
+}
+
+function editExpense(id, title, amount) {
+    let newTitle = prompt("Edit Expense Title:", title);
+    let newAmount = prompt("Edit Expense Amount:", amount);
+    if (newTitle !== null && newAmount !== null) {
+        let formData = new FormData();
+        formData.append('id', id);
+        formData.append('title', newTitle);
+        formData.append('amount', newAmount);
+        fetch('edit_expense.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                loadData();
+            })
+            .catch(error => console.error('Error:', error));
+    }
+}
+
+function removeExpense(id) {
+    if (confirm("Are you sure you want to remove this expense?")) {
+        let formData = new FormData();
+        formData.append('id', id);
+        fetch('remove_expense.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                loadData();
+            })
+            .catch(error => console.error('Error:', error));
+    }
 }
