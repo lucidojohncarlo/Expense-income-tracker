@@ -26,7 +26,7 @@ function loadData() {
             updateExpenseHistory(data.expenses);
             updateAuditTrail(data.auditTrail);
         })
-        .catch(error => console.error('Error fetching data:', error));
+        .catch(error => console.error('Error:', error));
 }
 
 function addIncome() {
@@ -40,7 +40,7 @@ function addIncome() {
             loadData();
             document.getElementById('incomeForm').reset();
         })
-        .catch(error => console.error('Error adding income:', error));
+        .catch(error => console.error('Error:', error));
 }
 
 function addExpense() {
@@ -54,7 +54,7 @@ function addExpense() {
             loadData();
             document.getElementById('expenseForm').reset();
         })
-        .catch(error => console.error('Error adding expense:', error));
+        .catch(error => console.error('Error:', error));
 }
 
 function resetAll() {
@@ -65,7 +65,7 @@ function resetAll() {
         .then(data => {
             loadData();
         })
-        .catch(error => console.error('Error resetting data:', error));
+        .catch(error => console.error('Error:', error));
 }
 
 function updateExpenseHistory(expenses) {
@@ -112,7 +112,7 @@ function editExpense(id, title, amount) {
             .then(data => {
                 loadData();
             })
-            .catch(error => console.error('Error editing expense:', error));
+            .catch(error => console.error('Error:', error));
     }
 }
 
@@ -128,6 +128,6 @@ function removeExpense(id) {
             .then(data => {
                 loadData();
             })
-            .catch(error => console.error('Error removing expense:', error));
+            .catch(error => console.error('Error:', error));
     }
 }
