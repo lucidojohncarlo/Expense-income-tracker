@@ -1,8 +1,8 @@
 <?php
-$servername = getenv('DB_SERVER');
-$username = getenv('DB_USERNAME');
-$password = getenv('DB_PASSWORD');
-$dbname = getenv('DB_NAME');
+$servername = getenv('localhost');
+$username = getenv('root');
+$password = getenv('');
+$dbname = getenv('budget_tracker');
 
 
 $conn = new mysqli($servername, $username, $password, $dbname, 3306, null, MYSQLI_CLIENT_SSL);
