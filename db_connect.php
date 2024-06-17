@@ -16,12 +16,9 @@ $dbname = "budget_tracker";
 // $dbname = "budget_tracker";
 
 // Create connection with SSL
-//$conn = new mysqli($servername, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL);
+$conn = new mysqli($servername, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL);
 
 
-$con = mysqli_init();
-mysqli_ssl_set($con,NULL,NULL, "C:\Users\lucidojm\Downloads", NULL, NULL);
-mysqli_real_connect($conn, "jcserver.mysql.database.azure.com", "johncarlo", "Jhared123", "budget_tracker", 3306, MYSQLI_CLIENT_SSL);
 
 // $conn = new mysqli($servername, $username, $password, $dbname);
 
