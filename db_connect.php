@@ -1,30 +1,32 @@
 <?php
 // Update these values with your actual database credentials
-$servername = getenv('DB_Server');
-$username = getenv('DB_USER');
-$password = getenv('DB_PASSWORD');
-$dbname = getenv('DB_NAME');
+$servername = getenv("DB_Server");
+$username = getenv("DB_Username");
+$password = getenv("DB_Password");
+$dbname = getenv("DB_Database");
 
-// SSL configuration (optional, uncomment if needed)
- $ssl_ca = 'D:\DOWNLOADS\Cert'; // Update with the path to your CA certificate
+// $servername ="jcserver.mysql.database.azure.com" ;
+// $username = "johncarlo";
+// $password = "Jhared123";
+// $dbname = "budget_tracker";
 
-// Create connection
-$conn = mysqli_init();
+// $servername ="localhost" ;
+// $username = "root";
+// $password = "";
+// $dbname = "budget_tracker";
 
-// SSL configuration (uncomment if you have a CA certificate)
-$use_ssl = false; // Change to true if you have SSL certificate
-if ($use_ssl) {
-    $ssl_ca = 'D:\DOWNLOADS\Cert'; // Update with the actual path to your CA certificate
-    mysqli_ssl_set($conn, NULL, NULL, $ssl_ca, NULL, NULL);
+// Create connection with SSL
+// $conn = new mysqli($servername, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL);
+
+//$conn = mysqli_init();
+//mysqli_ssl_set($conn, NULL, NULL, "C:\Users\lucidojm\Downloads", NULL, NULL);
+//mysqli_real_connect($conn, $server, $username, $password, $database, $port, NULL, MYSQLI_CLIENT_SSL);
+
+
+ $conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-
-// Establish connection
-$port = 3306; // Default MySQL port
-$flags = $use_ssl ? MYSQLI_CLIENT_SSL : 0; // Use SSL flag if SSL is enabled
-
-if (!mysqli_real_connect($conn, $servername, $username, $password, $dbname, $port, NULL, $flags)) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-echo "Connected successfully!";
 ?>
