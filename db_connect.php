@@ -26,17 +26,17 @@ $dbname = getenv('DB_Database');
 // }
 
 
-$conn = mysqli_init();
-$ssl_ca = 'D:\DOWNLOADS\Cert\DigiCertGlobalRootCA.crt.pem'; // Update with the correct path
-mysqli_ssl_set($conn, NULL, NULL, $ssl_ca, NULL, NULL);
-
-if (!mysqli_real_connect($conn, $servername, $username, $password, $dbname)) {
-    die("Connection failed: " . mysqli_connect_error());
-} else {
-    echo "Connected successfully!";
-}
-
-$conn->close();
+//$conn = mysqli_init();
+//$ssl_ca = 'D:\DOWNLOADS\Cert\DigiCertGlobalRootCA.crt.pem'; // Update with the correct path
+//mysqli_ssl_set($conn, NULL, NULL, $ssl_ca, NULL, NULL);
+//
+//if (!mysqli_real_connect($conn, $servername, $username, $password, $dbname)) {
+//    die("Connection failed: " . mysqli_connect_error());
+//} else {
+//    echo "Connected successfully!";
+//}
+//
+//$conn->close();
 
 //
 //
@@ -53,7 +53,7 @@ $conn->close();
 //
 //echo "Connected successfully!";
 
-//$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // $conn = new mysqli($servername, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL);
 
@@ -63,7 +63,12 @@ $conn->close();
 
 
 // Check connection
-//if ($conn->connect_error) {
-//    die("Connection failed: " . $conn->connect_error);
-//}
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+// Optional: Set charset
+$conn->set_charset("utf8mb4");
+
+// Return the connection object for use in other scripts
+return $conn;
 ?>
