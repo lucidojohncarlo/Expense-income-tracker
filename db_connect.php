@@ -5,9 +5,14 @@
 //$password = getenv("DB_Password");
 //$dbname = getenv("DB_Database");
 
-$servername ="lucidoserver.mysql.database.azure.com" ;
-$username = "JC";
-$password = "Jhared123";
+//$servername ="lucidoserver.mysql.database.azure.com" ;
+//$username = "JC";
+//$password = "Jhared123";
+//$dbname = "budget_tracker";
+
+$servername ="localhost" ;
+$username = "root";
+$password = "";
 $dbname = "budget_tracker";
 
 // Create connection

@@ -1,73 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
-    loadData();
-
-    document.getElementById('incomeForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        addIncome();
-    });
-
-    document.getElementById('expenseForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        addExpense();
-    });
-
-    document.getElementById('resetButton').addEventListener('click', function() {
-        resetAll();
-    });
-});
-
-function loadData() {
-    fetch('load_data.php')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('totalIncome').textContent = '₱' + data.totalIncome;
-            document.getElementById('totalExpenses').textContent = '₱' + data.totalExpenses;
-            document.getElementById('balance').textContent = '₱' + data.balance;
-            updateExpenseHistory(data.expenses);
-            updateAuditTrail(data.auditTrail);
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-function addIncome() {
-    let formData = new FormData(document.getElementById('incomeForm'));
-    fetch('add_income.php', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            loadData();
-            document.getElementById('incomeForm').reset();
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-function addExpense() {
-    let formData = new FormData(document.getElementById('expenseForm'));
-    fetch('add_expense.php', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            loadData();
-            document.getElementById('expenseForm').reset();
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-function resetAll() {
-    fetch('reset_data.php', {
-        method: 'POST'
-    })
-        .then(response => response.json())
-        .then(data => {
-            loadData();
-        })
-        .catch(error => console.error('Error:', error));
-}
-
 function updateExpenseHistory(expenses) {
     let expenseHistory = document.getElementById('expenseHistory');
     expenseHistory.innerHTML = '';
@@ -201,4 +131,3 @@ function resetAll() {
         })
         .catch(error => console.error('Error:', error));
 }
-
