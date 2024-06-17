@@ -1,8 +1,8 @@
 <?php
 // Update these values with your actual database credentials
-$servername = "lucidoserver.mysql.database.azure.com";
-$username = "JC";
-$password = "Jhared123";
+$servername = "localhost";
+$username = "root";
+$password = "";
 $dbname = "budget_tracker";
 
 // Create connection
