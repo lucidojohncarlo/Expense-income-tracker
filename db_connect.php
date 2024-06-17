@@ -5,10 +5,10 @@
 //$password = getenv("DB_Password");
 //$dbname = getenv("DB_Database");
 
-// $servername ="jcserver.mysql.database.azure.com" ;
-// $username = "johncarlo";
-// $password = "Jhared123";
-// $dbname = "budget_tracker";
+$servername ="jcserver.mysql.database.azure.com" ;
+$username = "johncarlo";
+$password = "Jhared123";
+$dbname = "budget_tracker";
 
 // $servername ="localhost" ;
 // $username = "root";
@@ -23,7 +23,7 @@ $con = mysqli_init();
 mysqli_ssl_set($con,NULL,NULL, "C:\Users\lucidojm\Downloads", NULL, NULL);
 mysqli_real_connect($conn, "jcserver.mysql.database.azure.com", "johncarlo", "Jhared123", "budget_tracker", 3306, MYSQLI_CLIENT_SSL);
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
