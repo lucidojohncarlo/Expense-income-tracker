@@ -19,7 +19,7 @@
             <!-- Add Income Form -->
             <div class="add-income-container">
                 <h4>Add Income</h4>
-                <form id="incomeForm" method="POST">
+                <form id="incomeForm" method="POST" action="add_income.php">
                     <div class="form-group">
                         <label for="income">Income Source:</label>
                         <input class="form-control" type="text" id="income" name="income">
@@ -35,7 +35,7 @@
             <!-- Add Expense Form -->
             <div class="add-expense-container mt-4">
                 <h4>Add Expense</h4>
-                <form id="expenseForm" method="POST">
+                <form id="expenseForm" method="POST" action="add_expense.php">
                     <div class="form-group">
                         <label for="expense">Expense Title:</label>
                         <input class="form-control" type="text" id="expense" name="expense">
@@ -97,12 +97,13 @@
         </div>
     </div>
 </div>
-        <!-- Bootstrap JS -->
+
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Script JS -->
-<script src="script.js"></script>
+<script src="./script.js"></script>
 
 </body>
 </html>
