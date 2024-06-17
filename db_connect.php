@@ -1,9 +1,9 @@
 <?php
 // Update these values with your actual database credentials
-$servername = getenv("DB_Server");
-$username = getenv("DB_Username");
-$password = getenv("DB_Password");
-$dbname = getenv("DB_Database");
+$servername = getenv('DB_Server');
+$username = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
+$dbname = getenv('DB_NAME');
 
 // $servername ="jcserver.mysql.database.azure.com" ;
 // $username = "johncarlo";
@@ -15,7 +15,33 @@ $dbname = getenv("DB_Database");
 // $password = "";
 // $dbname = "budget_tracker";
 
+// SSL configuration (optional, uncomment if needed)
+// $ssl_ca = '/path/to/ca-cert.pem'; // Update with the path to your CA certificate
+
 // Create connection with SSL
+// SSL configuration (uncomment if you have a CA certificate)
+// $use_ssl = false; // Change to true if you have SSL certificate
+// if ($use_ssl) {
+//     mysqli_ssl_set($conn, NULL, NULL, $ssl_ca, NULL, NULL);
+// }
+
+
+$conn = mysqli_init();
+$port = 3306; // Default MySQL port
+$flags = 0; // MYSQLI_CLIENT_SSL; // Uncomment if using SSL
+
+if (!$conn) {
+    die("mysqli_init failed");
+}
+
+if (!mysqli_real_connect($conn, $servername, $username, $password, $dbname, $port, NULL, $flags)) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+echo "Connected successfully!";
+
+//$conn = new mysqli($servername, $username, $password, $dbname);
+
 // $conn = new mysqli($servername, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL);
 
 //$conn = mysqli_init();
@@ -23,10 +49,8 @@ $dbname = getenv("DB_Database");
 //mysqli_real_connect($conn, $server, $username, $password, $database, $port, NULL, MYSQLI_CLIENT_SSL);
 
 
- $conn = new mysqli($servername, $username, $password, $dbname);
-
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+//if ($conn->connect_error) {
+//    die("Connection failed: " . $conn->connect_error);
+//}
 ?>
