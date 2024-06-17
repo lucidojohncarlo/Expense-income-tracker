@@ -27,18 +27,31 @@ $dbname = getenv('DB_NAME');
 
 
 $conn = mysqli_init();
-$port = 3306; // Default MySQL port
-$flags = 0; // MYSQLI_CLIENT_SSL; // Uncomment if using SSL
+$ssl_ca = 'D:\DOWNLOADS\Cert\DigiCertGlobalRootCA.crt.pem'; // Update with the correct path
+mysqli_ssl_set($conn, NULL, NULL, $ssl_ca, NULL, NULL);
 
-if (!$conn) {
-    die("mysqli_init failed");
-}
-
-if (!mysqli_real_connect($conn, $servername, $username, $password, $dbname, $port, NULL, $flags)) {
+if (!mysqli_real_connect($conn, $servername, $username, $password, $dbname)) {
     die("Connection failed: " . mysqli_connect_error());
+} else {
+    echo "Connected successfully!";
 }
 
-echo "Connected successfully!";
+$conn->close();
+
+//
+//
+//$port = 3306; // Default MySQL port
+//$flags = 0; // MYSQLI_CLIENT_SSL; // Uncomment if using SSL
+//
+//if (!$conn) {
+//    die("mysqli_init failed");
+//}
+//
+//if (!mysqli_real_connect($conn, $servername, $username, $password, $dbname, $port, NULL, $flags)) {
+//    die("Connection failed: " . mysqli_connect_error());
+//}
+//
+//echo "Connected successfully!";
 
 //$conn = new mysqli($servername, $username, $password, $dbname);
 
