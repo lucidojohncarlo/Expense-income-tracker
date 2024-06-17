@@ -1,8 +1,8 @@
 <?php
 $servername = getenv('DB_Server');
-$username = getenv('DB_USER');
-$password = getenv('DB_PASSWORD');
-$dbname = getenv('DB_NAME');
+$username = getenv('DB_Username');
+$password = getenv('DB_Password');
+$dbname = getenv('DB_Database');
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
