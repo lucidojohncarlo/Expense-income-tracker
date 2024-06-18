@@ -1,6 +1,13 @@
 <?php
 // Database connection
-$conn = new mysqli(getenv('DB_Server'), getenv('DB_Username'), getenv('DB_Password'), getenv('DB_Database'));
+$servername = getenv('DB_Server');
+$username = getenv('DB_Username');
+$password = getenv('DB_Password');
+$dbname = getenv('DB_Database');
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+//$conn = new mysqli(getenv('DB_Server'), getenv('DB_Username'), getenv('DB_Password'), getenv('DB_Database'));
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
