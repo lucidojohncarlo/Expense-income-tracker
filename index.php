@@ -1,6 +1,6 @@
 <?php
 // Database connection
-$conn = new mysqli(getenv('DB_Server'), getenv('DB_USER'), getenv('DB_PASSWORD'), getenv('DB_NAME'));
+$conn = new mysqli(getenv('DB_Server'), getenv('DB_Username'), getenv('DB_Password'), getenv('DB_Database'));
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
