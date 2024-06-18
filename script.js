@@ -130,4 +130,5 @@ function removeExpense(id) {
             })
             .catch(error => console.error('Error:', error));
     }
+    
 }

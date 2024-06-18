@@ -1,89 +1,112 @@
-<?php
-// Database connection
-$servername = getenv('DB_Server');
-$username = getenv('DB_Username');
-$password = getenv('DB_Password');
-$dbname = getenv('DB_Database');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income and Expense Tracker System</title>
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-//$conn = new mysqli(getenv('DB_Server'), getenv('DB_Username'), getenv('DB_Password'), getenv('DB_Database'));
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+<div class="main">
+    <div class="budget-container row">
+        <div class="add-container col-md-4">
+            <!-- Add Income Form -->
+            <div class="add-income-container">
+                <h4>Add Income</h4>
+                <form id="incomeForm" method="POST" action="add_income.php">
+                    <div class="form-group">
+                        <label for="income">Income Source:</label>
+                        <input class="form-control" type="text" id="income" name="income">
+                    </div>
+                    <div class="form-group">
+                        <label for="incomeAmount">Amount:</label>
+                        <input class="form-control" type="text" id="incomeAmount" name="incomeAmount">
+                    </div>
+                    <button class="btn btn-primary form-control" type="submit">Add Income</button>
+                </form>
+            </div>
 
-// Initialize response array
-$response = ["status" => "", "message" => "", "data" => []];
+            <!-- Add Expense Form -->
+            <div class="add-expense-container mt-4">
+                <h4>Add Expense</h4>
+                <form id="expenseForm" method="POST" action="add_expense.php">
+                    <div class="form-group">
+                        <label for="expense">Expense Title:</label>
+                        <input class="form-control" type="text" id="expense" name="expense">
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseAmount">Amount:</label>
+                        <input class="form-control" type="text" id="expenseAmount" name="expenseAmount">
+                    </div>
+                    <button class="btn btn-primary form-control" type="submit">Add Expense</button>
+                </form>
+            </div>
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['action'])) {
-        $action = $_POST['action'];
+            <!-- Reset All Button -->
+            <button id="resetButton" class="btn btn-danger form-control mt-2">Reset All</button>
 
-        if ($action == "add_income") {
-            $income = $_POST['income'];
-            $incomeAmount = $_POST['incomeAmount'];
+            <!-- Button to navigate to index.php -->
 
-            $stmt = $conn->prepare("INSERT INTO income (source, amount) VALUES (?, ?)");
-            $stmt->bind_param("ss", $income, $incomeAmount);
+        </div>
 
-            if ($stmt->execute()) {
-                $response["status"] = "success";
-                $response["message"] = "Income added successfully!";
-            } else {
-                $response["status"] = "error";
-                $response["message"] = "Error adding income!";
-            }
-            $stmt->close();
-        } elseif ($action == "add_expense") {
-            $expense = $_POST['expense'];
-            $expenseAmount = $_POST['expenseAmount'];
+        <!-- Display Section -->
+        <div class="display-container col-md-8">
+            <div class="heading row" style="display: flex; justify-content: space-around;">
+                <div class="alert alert-primary" role="alert">
+                    Total Income: <span id="totalIncome">₱</span>
+                </div>
+                <div class="alert alert-primary" role="alert">
+                    Total Expenses: <span id="totalExpenses">₱</span>
+                </div>
+                <div class="alert alert-primary" role="alert">
+                    Balance: <span id="balance">₱</span>
+                </div>
+            </div>
+            <hr>
+            <!-- Expense History Table -->
+            <div class="table-container">
+                <h5>Expense History:</h5>
+                <div class="table-responsive" id="expenseHistoryContainer">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="expenseHistory">
+                        <!-- Expense items will be added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-            $stmt = $conn->prepare("INSERT INTO expenses (title, amount) VALUES (?, ?)");
-            $stmt->bind_param("ss", $expense, $expenseAmount);
+            <!-- Audit Trail Section -->
+            <div class="audit-trail mt-4">
+                <h5>Audit Trail:</h5>
+                <div class="audit-trail-container" id="auditTrailContainer">
+                    <ul class="list-group" id="auditTrail">
+                        <!-- Audit trail items will be added dynamically -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            if ($stmt->execute()) {
-                $response["status"] = "success";
-                $response["message"] = "Expense added successfully!";
-            } else {
-                $response["status"] = "error";
-                $response["message"] = "Error adding expense!";
-            }
-            $stmt->close();
-        } elseif ($action == "reset") {
-            // Reset all data
-            $conn->query("TRUNCATE TABLE income");
-            $conn->query("TRUNCATE TABLE expenses");
-            $response["status"] = "success";
-            $response["message"] = "All data reset successfully!";
-        }
-    }
-} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Fetch data for display
-    $resultIncome = $conn->query("SELECT SUM(amount) as totalIncome FROM income");
-    $totalIncome = $resultIncome->fetch_assoc()["totalIncome"] ?? 0;
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    $resultExpenses = $conn->query("SELECT SUM(amount) as totalExpenses FROM expenses");
-    $totalExpenses = $resultExpenses->fetch_assoc()["totalExpenses"] ?? 0;
+<!-- Script JS -->
+<script src="script.js"></script>
 
-    $balance = $totalIncome - $totalExpenses;
-
-    $expenseHistory = [];
-    $result = $conn->query("SELECT id, title, amount FROM expenses");
-    while ($row = $result->fetch_assoc()) {
-        $expenseHistory[] = $row;
-    }
-
-    $response["data"] = [
-        "totalIncome" => $totalIncome,
-        "totalExpenses" => $totalExpenses,
-        "balance" => $balance,
-        "expenseHistory" => $expenseHistory
-    ];
-}
-
-$conn->close();
-header('Content-Type: application/json');
-echo json_encode($response);
-exit;
-?>
+</body>
+</html>
